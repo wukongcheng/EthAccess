@@ -18,6 +18,8 @@
     "cors": "^2.8.1",
     "debug": "~2.2.0",
     "http": "0.0.0",
+    "serve-favicon": "~2.3.0",
+    "jade": "^1.11.0"
   },
   "devDependencies": {},
   "scripts": {

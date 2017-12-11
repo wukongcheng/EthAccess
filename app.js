@@ -10,7 +10,7 @@ var admin = require('./routes/admin');
 const swagger = require('swagger-express');
 const rootPath = require('config').app.rootPath;
 const cors = require('cors');
-const LOG = require('./lib/common/winstonlogger');
+const LOG = require('./lib/common/winstonlog');
 LOG.info('root path is ', rootPath);
 
 var app = express();
