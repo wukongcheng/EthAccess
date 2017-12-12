@@ -85,4 +85,30 @@ router.get('/encodePriKey/:privateKey', function(req, res){
 	});
 });
 
+/**
+ * @swagger
+ * path: /ops/getBlockNumber
+ * operations:
+ *   - httpMethod: GET
+ *     nickname: getBlockNumber
+ *     summary: get the block number of the blockchain
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - name: none
+ */
+router.post('/importRawKey', function(req, res){
+  let pri = req.body.pri;
+  let pwd = req.body.pwd;
+
+  return walletapi.importRawKey(pri, pwd).then((address)=>{
+        res.json({
+              "result": "success",
+              "errorMsg": null,
+              "errorCode": null,
+              "content": address
+          });
+    });
+});
+
 module.exports = router;
