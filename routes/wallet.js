@@ -81,8 +81,7 @@ router.get('/encodePriKey/:privateKey', function(req, res){
 	      "errorMsg": null,
 	      "errorCode": null,
 	      "content": encodePriKey
-	  });
-    };
+	});
 });
 
 module.exports = router;
