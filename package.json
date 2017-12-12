@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "1.0.0-beta.26.js",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
   "dependencies": {
     "web3": "^1.0.0-beta.26",
     "q":  "^1.5.1",

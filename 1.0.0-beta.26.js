@@ -86,7 +86,7 @@ app.post('/importRawKey', function(req, res){
 });
 
 app.get('/getPriKeys', function(req, res){
-  	var p = "/Users/chengsilei/Dianrong/ethereum/eth/test/keystore/";
+  	var p = "/Users/chengsilei/ethereum/eth/test/keystore/";
   	var keys = new Array();
   	var i = 0;
 
@@ -114,7 +114,7 @@ app.get('/getPriKeys', function(req, res){
 });
 
 app.get('/getPriKeyByAddress', function(req, res){
-	  var p = "/Users/chengsilei/Dianrong/ethereum/eth/test/keystore/";
+	  var p = "/Users/chengsilei/ethereum/eth/test/keystore/";
 	  var address = req.query.address;
 	  if (address[0] == '0' && address[1] == 'x') {
 		    address = address.slice(2);
