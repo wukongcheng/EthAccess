@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var admin = require('./routes/admin');
+var wallet = require('./routes/wallet');
 
 const swagger = require('swagger-express');
 const rootPath = require('config').app.rootPath;
@@ -36,10 +37,11 @@ app.use(swagger.init(app, {
     swaggerJSON: '/api-docs.json',
     swaggerUI: './public/swagger/',
     //models: './routes/models.json', //if separate models from the source code,uncomment this line
-    apis: ['./routes/admin.js']
+    apis: ['./routes/wallet.js']
 }));
 
 app.use(rootPath + '/admin', admin);
+app.use(rootPath + '/wallet', wallet);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
