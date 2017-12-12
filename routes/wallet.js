@@ -60,4 +60,29 @@ router.get('/newAccount/:pwd', function(req, res){
     });
 });
 
+/**
+ * @swagger
+ * path: /ops/getBlockNumber
+ * operations:
+ *   - httpMethod: GET
+ *     nickname: getBlockNumber
+ *     summary: get the block number of the blockchain
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - name: none
+ */
+router.get('/encodePriKey/:privateKey', function(req, res){
+    let privateKey = req.params.privateKey;
+    var encodePriKey = walletapi.encodePriKey(privateKey);
+
+	res.json({
+	      "result": "success",
+	      "errorMsg": null,
+	      "errorCode": null,
+	      "content": encodePriKey
+	  });
+    };
+});
+
 module.exports = router;
