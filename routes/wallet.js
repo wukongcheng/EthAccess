@@ -35,4 +35,29 @@ router.get('/getBalance/:address', function(req, res){
     });
 });
 
+/**
+ * @swagger
+ * path: /ops/getBlockNumber
+ * operations:
+ *   - httpMethod: GET
+ *     nickname: getBlockNumber
+ *     summary: get the block number of the blockchain
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - name: none
+ */
+router.get('/newAccount/:pwd', function(req, res){
+  let pwd = req.params.pwd;
+
+  return walletapi.newAccount(pwd).then((address)=>{
+        res.json({
+              "result": "success",
+              "errorMsg": null,
+              "errorCode": null,
+              "content": address
+          });
+    });
+});
+
 module.exports = router;
