@@ -7,6 +7,7 @@ var express = require('express');
 var router = express.Router();
 var logger = require('../lib/common/winstonlog.js');
 const walletapi = require('../lib/walletapi.js');
+const wif = require('../lib/common/wif.js');
 const VError = require('verror');
 const Q = require('q');
 
@@ -74,7 +75,7 @@ router.get('/newAccount/:pwd', function(req, res){
  */
 router.get('/encodePriKey/:privateKey', function(req, res){
     let privateKey = req.params.privateKey;
-    var encodePriKey = walletapi.encodePriKey(privateKey);
+    var encodePriKey = wif.encodePriKey(privateKey);
 
 	res.json({
 	      "result": "success",
