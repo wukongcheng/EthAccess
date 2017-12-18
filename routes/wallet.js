@@ -73,9 +73,10 @@ router.get('/newAccount/:pwd', function(req, res){
  *     parameters:
  *       - name: none
  */
-router.get('/encodePriKey/:privateKey', function(req, res){
+router.get('/encodePriKey/:privateKey/:token', function(req, res){
     let privateKey = req.params.privateKey;
-    var encodePriKey = wif.encodePriKey(privateKey);
+    let token = req.params.token;
+    var encodePriKey = wif.encodePriKey(privateKey, token);
 
 	res.json({
 	      "result": "success",
