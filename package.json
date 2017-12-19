@@ -23,7 +23,8 @@
     "http": "0.0.0",
     "serve-favicon": "~2.3.0",
     "jade": "^1.11.0",
-    "wif": "^2.0.6"
+    "wif": "^2.0.6",
+    "bip39": "^2.4.0"
   },
   "devDependencies": {},
   "scripts": {

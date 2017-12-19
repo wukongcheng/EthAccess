@@ -8,6 +8,7 @@ var router = express.Router();
 var logger = require('../lib/common/winstonlog.js');
 const walletapi = require('../lib/walletapi.js');
 const wif = require('../lib/common/wif.js');
+const bip = require('../lib/common/bip.js');
 const VError = require('verror');
 const Q = require('q');
 
@@ -110,6 +111,54 @@ router.post('/importRawKey', function(req, res){
               "content": address
           });
     });
+});
+
+/**
+ * @swagger
+ * path: /ops/getBlockNumber
+ * operations:
+ *   - httpMethod: GET
+ *     nickname: getBlockNumber
+ *     summary: get the block number of the blockchain
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - name: none
+ */
+router.get('/entropyToMnemonic/:privateKey', function(req, res){
+    let privateKey = req.params.privateKey;
+    var mnemonic = bip.entropyToMnemonic(privateKey);
+
+	res.json({
+	      "result": "success",
+	      "errorMsg": null,
+	      "errorCode": null,
+	      "content": mnemonic
+	});
+});
+
+/**
+ * @swagger
+ * path: /ops/getBlockNumber
+ * operations:
+ *   - httpMethod: GET
+ *     nickname: getBlockNumber
+ *     summary: get the block number of the blockchain
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - name: none
+ */
+router.get('/mnemonicToEntropy/:mnemonic', function(req, res){
+    let mnemonic = req.params.mnemonic;
+    var privateKey = bip.mnemonicToEntropy(mnemonic);
+
+	res.json({
+	      "result": "success",
+	      "errorMsg": null,
+	      "errorCode": null,
+	      "content": privateKey
+	});
 });
 
 module.exports = router;
