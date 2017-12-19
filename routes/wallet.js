@@ -127,7 +127,7 @@ router.post('/importRawKey', function(req, res){
  */
 router.get('/entropyToMnemonic/:privateKey', function(req, res){
     let privateKey = req.params.privateKey;
-    var mnemonic = bip.entropyToMnemonic(privateKey);
+    var mnemonic = bip.getMnemonic(privateKey);
 
 	res.json({
 	      "result": "success",
@@ -151,7 +151,7 @@ router.get('/entropyToMnemonic/:privateKey', function(req, res){
  */
 router.get('/mnemonicToEntropy/:mnemonic', function(req, res){
     let mnemonic = req.params.mnemonic;
-    var privateKey = bip.mnemonicToEntropy(mnemonic);
+    var privateKey = bip.getEntropy(mnemonic);
 
 	res.json({
 	      "result": "success",
