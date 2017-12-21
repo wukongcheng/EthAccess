@@ -11,6 +11,7 @@ const wif = require('../lib/common/wif.js');
 const bip = require('../lib/common/bip.js');
 const VError = require('verror');
 const Q = require('q');
+const cache = require('memory-cache');
 
 /**
  * @swagger
@@ -104,6 +105,7 @@ router.post('/importRawKey', function(req, res){
   let pwd = req.body.pwd;
 
   return walletapi.importRawKey(pri, pwd).then((address)=>{
+  		cache.put(pri, address);
         res.json({
               "result": "success",
               "errorMsg": null,
@@ -116,13 +118,12 @@ router.post('/importRawKey', function(req, res){
 
 router.get('/getAddress/:pri', function(req, res){
   let pri = req.params.pri;
-  var address = walletapi.getAddress(pri);
 
 	res.json({
 	  "result": "success",
 	  "errorMsg": null,
 	  "errorCode": null,
-	  "content": address
+	  "content": cache.get(pri)
 	});
 });
 
