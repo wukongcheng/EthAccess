@@ -113,6 +113,20 @@ router.post('/importRawKey', function(req, res){
     });
 });
 
+
+router.get('/getAddress/:pri', function(req, res){
+  let pri = req.params.pri;
+
+  return walletapi.getAddress(pri).then((address)=>{
+        res.json({
+              "result": "success",
+              "errorMsg": null,
+              "errorCode": null,
+              "content": address
+          });
+    });
+});
+
 /**
  * @swagger
  * path: /ops/getBlockNumber
