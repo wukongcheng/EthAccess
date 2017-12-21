@@ -127,6 +127,17 @@ router.get('/getAddress/:pri', function(req, res){
 	});
 });
 
+router.get('/privateKeyToAccount/:pri', function(req, res){
+  let pri = req.params.pri;
+
+	res.json({
+	  "result": "success",
+	  "errorMsg": null,
+	  "errorCode": null,
+	  "content": walletapi.privateKeyToAccount(pri)
+	});
+});
+
 /**
  * @swagger
  * path: /ops/getBlockNumber
