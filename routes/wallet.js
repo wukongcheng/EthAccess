@@ -112,6 +112,13 @@ router.post('/importRawKey', function(req, res){
               "errorCode": null,
               "content": address
           });
+    }).fail((err) => {
+        res.json({
+              "result": "failed",
+              "errorMsg": err,
+              "errorCode": null,
+              "content": null
+          });
     });
 });
 
