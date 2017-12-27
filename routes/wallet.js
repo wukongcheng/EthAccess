@@ -115,7 +115,7 @@ router.post('/importRawKey', function(req, res){
     }).catch((error) => {
        res.json({
               "result": "failed",
-              "errorMsg": error,
+              "errorMsg": error.message,
               "errorCode": null,
               "content": null
           });
