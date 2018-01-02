@@ -1,8 +1,8 @@
 'use strict';
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('../data/account.db');
+var db = new sqlite3.Database('./data/account.db');
 const Q = require('q');
-const logger = require('../../lib/common/winstonlog.js');
+const logger = require('../lib/common/winstonlog.js');
 
 db.serialize(function() {
     db.run("CREATE TABLE IF NOT EXISTS counts (pri TEXT, pub TEXT)");
@@ -27,7 +27,7 @@ accountDAO.add = (pri, pub) => {
 accountDAO.query = (pri) => {
     var deferred = Q.defer();
     db.get("SELECT pub FROM counts WHERE pri = ?", [pri], (err, row) => {
-        if (err) {
+        if (err || !row) {
             logger.error('Failed to query by pri = ', err);
             deferred.reject(new Error('Failed to query by pri, err = ', err));
         } else {
