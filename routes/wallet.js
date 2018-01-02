@@ -11,7 +11,8 @@ const wif = require('../lib/common/wif.js');
 const bip = require('../lib/common/bip.js');
 const VError = require('verror');
 const Q = require('q');
-const cache = require('memory-cache');
+//const cache = require('memory-cache');
+const dao = require('../dao/accountDAO.js')
 
 /**
  * @swagger
@@ -105,12 +106,14 @@ router.post('/importRawKey', function(req, res){
   let pwd = req.body.pwd;
 
   return walletapi.importRawKey(pri, pwd).then((address)=>{
-  		cache.put(pri, address);
+  		  //cache.put(pri, address);
+        return dao.add(pri, address);
+    }).then((result)=>{
         res.json({
               "result": "success",
               "errorMsg": null,
               "errorCode": null,
-              "content": address
+              "content": result
           });
     }).catch((error) => {
        res.json({
@@ -126,12 +129,21 @@ router.post('/importRawKey', function(req, res){
 router.get('/getAddress/:pri', function(req, res){
   let pri = req.params.pri;
 
-	res.json({
-	  "result": "success",
-	  "errorMsg": null,
-	  "errorCode": null,
-	  "content": cache.get(pri)
-	});
+  return dao.query(pri).then((address)=>{
+    res.json({
+      "result": "success",
+      "errorMsg": null,
+      "errorCode": null,
+      "content": address
+    });
+  }).catch((error) => {
+     res.json({
+            "result": "failed",
+            "errorMsg": error.message,
+            "errorCode": null,
+            "content": null
+        });
+   });
 });
 
 router.get('/privateKeyToAccount/:pri', function(req, res){
