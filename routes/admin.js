@@ -38,4 +38,39 @@ router.get('/getBlockNumber', function(req, res){
     });
 });
 
+router.get('/getBlock/:blocknumber', function(req, res){
+  let no = req.params.blocknumber;
+  return web3.getBlock(no).then((block)=>{
+        res.json({
+              "result": "success",
+              "errorMsg": null,
+              "errorCode": null,
+              "content": block
+          });
+    });
+});
+
+router.get('/getAccounts', function(req, res){
+  return web3.getAccounts().then((accounts)=>{
+        res.json({
+              "result": "success",
+              "errorMsg": null,
+              "errorCode": null,
+              "content": accounts
+          });
+    });
+});
+
+router.get('/getTransaction/:txhash', function(req, res){
+  let txhash = req.params.txhash;
+  return web3.getTransaction(txhash).then((tx)=>{
+        res.json({
+              "result": "success",
+              "errorMsg": null,
+              "errorCode": null,
+              "content": tx
+          });
+    });
+});
+
 module.exports = router;
