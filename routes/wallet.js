@@ -205,4 +205,22 @@ router.get('/mnemonicToEntropy/:mnemonic', function(req, res){
 	});
 });
 
+
+router.post('/sendRawTransaction', function(req, res){
+    let pri = req.body.pri;
+    let gasPrice = req.body.gasPrice;
+    let to = req.body.to;
+    let value = req.body.value;
+    let data = req.body.data;
+  
+    return walletapi.sendRawTransaction(pri, gasPrice, to, value, data).then((txhash)=>{
+        res.json({
+              "result": "success",
+              "errorMsg": null,
+              "errorCode": null,
+              "content": txhash
+          });
+    });
+  });
+
 module.exports = router;
