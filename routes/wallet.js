@@ -235,7 +235,7 @@ router.post('/sendTransaction', function(req, res) {
     let value = req.body.value;
     let pwd = req.body.pwd;
 
-    return walletapi.sendTransaction(from, to, value, pwd).on('transactionHash', function(hash){ 
+    walletapi.sendTransaction(from, to, value, pwd).then('transactionHash', function(hash){ 
         logger.debug('walletapi.sendTransaction: txhash = ' + hash);
 
         res.json({
@@ -244,7 +244,7 @@ router.post('/sendTransaction', function(req, res) {
             "errorCode": null,
             "content": hash
         });
-    }).on('error', function(error){
+    }).fail('error', function(error){
         logger.debug('walletapi.sendTransaction: error = ' + error.message);
 
         res.json({
