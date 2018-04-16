@@ -220,13 +220,36 @@ router.post('/sendRawTransaction', function(req, res){
               "content": txhash
           });
     }).on('error', function(error){
-	res.json({
+	    res.json({
               "result": "failed",
               "errorMsg": error.message,
               "errorCode": null,
               "content": null
           });
 	});
+  });
+
+router.post('/sendTransaction', function(req, res) {
+    let from = req.body.from;
+    let to = req.body.to;
+    let value = req.body.value;
+    let pwd = req.body.pwd;
+
+    return walletapi.sendTransaction(from, to, value, pwd).on('transactionHash', function(hash){ 
+        res.json({
+            "result": "success",
+            "errorMsg": null,
+            "errorCode": null,
+            "content": hash
+        });
+    }).on('error', function(error){
+        res.json({
+                "result": "failed",
+                "errorMsg": error.message,
+                "errorCode": null,
+                "content": null
+            });
+    });
   });
 
 module.exports = router;
