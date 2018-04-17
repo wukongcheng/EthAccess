@@ -217,7 +217,7 @@ router.post('/sendRawTransaction', function(req, res){
               "result": "success",
               "errorMsg": null,
               "errorCode": null,
-              "content": txhash
+              "content": hash
           });
     }).catch((error) => {
 	    res.json({
