@@ -212,14 +212,14 @@ router.post('/sendRawTransaction', function(req, res){
     let value = req.body.value;
     let data = req.body.data;
   
-    return walletapi.sendRawTransaction(pri, to, value, data).on('transactionHash', function(txhash){
+    return walletapi.sendRawTransaction(pri, to, value, data).then((hash) => {
         res.json({
               "result": "success",
               "errorMsg": null,
               "errorCode": null,
               "content": txhash
           });
-    }).on('error', function(error){
+    }).catch((error) => {
 	    res.json({
               "result": "failed",
               "errorMsg": error.message,
