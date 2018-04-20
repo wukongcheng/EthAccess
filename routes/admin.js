@@ -82,6 +82,7 @@ router.get('/getAccounts', function(req, res){
 *     summary: get detailed block info for specific block number
 *     parameters:
 *       - name: txhash
+*         paramType: path
 *         dataType: string
 *         required: true
 */

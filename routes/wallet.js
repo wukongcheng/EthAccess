@@ -25,6 +25,7 @@ const dao = require('../dao/accountDAO.js')
  *       - application/json
  *     parameters:
  *       - name: address
+ *         paramType: path
  *         dataType: string
  *         required: true
  */
@@ -52,6 +53,7 @@ router.get('/getBalance/:address', function(req, res){
  *       - application/json
  *     parameters:
  *       - name: pwd
+ *         paramType: path
  *         dataType: string
  *         required: true
  */
@@ -164,6 +166,7 @@ router.get('/privateKeyToAccount/:pri', function(req, res){
  *       - application/json
  *     parameters:
  *       - name: privateKey
+ *         paramType: path
  *         dataType: string
  *         required: true
  */
@@ -190,6 +193,7 @@ router.get('/entropyToMnemonic/:privateKey', function(req, res){
  *       - application/json
  *     parameters:
  *       - name: mnemonic
+ *         paramType: path
  *         dataType: string
  *         required: true
  */
