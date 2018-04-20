@@ -1,7 +1,7 @@
 /**
  * @swagger
- * resourcePath: /ops
- * description: Certificate operation API
+ * resourcePath: /wallet
+ * description: wallet API
  */ 
 var express = require('express');
 var router = express.Router();
@@ -16,15 +16,17 @@ const dao = require('../dao/accountDAO.js')
 
 /**
  * @swagger
- * path: /ops/getBlockNumber
+ * path: /wallet/getBalance/{address}
  * operations:
  *   - httpMethod: GET
- *     nickname: getBlockNumber
- *     summary: get the block number of the blockchain
+ *     nickname: getBalance
+ *     summary: get the balance of the address
  *     consumes:
  *       - application/json
  *     parameters:
- *       - name: none
+ *       - name: address
+ *         dataType: string
+ *         required: true
  */
 router.get('/getBalance/:address', function(req, res){
   let address = req.params.address;
@@ -41,15 +43,17 @@ router.get('/getBalance/:address', function(req, res){
 
 /**
  * @swagger
- * path: /ops/getBlockNumber
+ * path: /wallet/newAccount/{pwd}
  * operations:
  *   - httpMethod: GET
- *     nickname: getBlockNumber
- *     summary: get the block number of the blockchain
+ *     nickname: newAccount
+ *     summary: create a new account
  *     consumes:
  *       - application/json
  *     parameters:
- *       - name: none
+ *       - name: pwd
+ *         dataType: string
+ *         required: true
  */
 router.get('/newAccount/:pwd', function(req, res){
   let pwd = req.params.pwd;
@@ -64,18 +68,6 @@ router.get('/newAccount/:pwd', function(req, res){
     });
 });
 
-/**
- * @swagger
- * path: /ops/getBlockNumber
- * operations:
- *   - httpMethod: GET
- *     nickname: getBlockNumber
- *     summary: get the block number of the blockchain
- *     consumes:
- *       - application/json
- *     parameters:
- *       - name: none
- */
 router.get('/encodePriKey/:privateKey/:token', function(req, res){
     let privateKey = req.params.privateKey;
     let token = req.params.token;
@@ -91,15 +83,19 @@ router.get('/encodePriKey/:privateKey/:token', function(req, res){
 
 /**
  * @swagger
- * path: /ops/getBlockNumber
+ * path: /wallet/importRawKey
  * operations:
- *   - httpMethod: GET
- *     nickname: getBlockNumber
- *     summary: get the block number of the blockchain
+ *   - httpMethod: POST
+ *     nickname: importRawKey
+ *     summary: create a new account from a raw private key
  *     consumes:
  *       - application/json
  *     parameters:
- *       - name: none
+ *       - name: args
+ *         paramType: body 
+ *         dataType: accountDAO
+ *         description: account private key and password
+ *         required: true
  */
 router.post('/importRawKey', function(req, res){
   let pri = req.body.pri;
@@ -159,15 +155,17 @@ router.get('/privateKeyToAccount/:pri', function(req, res){
 
 /**
  * @swagger
- * path: /ops/getBlockNumber
+ * path: /wallet/entropyToMnemonic/{privateKey}
  * operations:
  *   - httpMethod: GET
- *     nickname: getBlockNumber
- *     summary: get the block number of the blockchain
+ *     nickname: entropyToMnemonic
+ *     summary: get the Mnemonic from the private key
  *     consumes:
  *       - application/json
  *     parameters:
- *       - name: none
+ *       - name: privateKey
+ *         dataType: string
+ *         required: true
  */
 router.get('/entropyToMnemonic/:privateKey', function(req, res){
     let privateKey = req.params.privateKey;
@@ -183,15 +181,17 @@ router.get('/entropyToMnemonic/:privateKey', function(req, res){
 
 /**
  * @swagger
- * path: /ops/getBlockNumber
+ * path: /wallet/mnemonicToEntropy/{mnemonic}
  * operations:
  *   - httpMethod: GET
- *     nickname: getBlockNumber
- *     summary: get the block number of the blockchain
+ *     nickname: mnemonicToEntropy
+ *     summary: get the private key from the mnemonic
  *     consumes:
  *       - application/json
  *     parameters:
- *       - name: none
+ *       - name: mnemonic
+ *         dataType: string
+ *         required: true
  */
 router.get('/mnemonicToEntropy/:mnemonic', function(req, res){
     let mnemonic = req.params.mnemonic;
@@ -205,7 +205,22 @@ router.get('/mnemonicToEntropy/:mnemonic', function(req, res){
 	});
 });
 
-
+/**
+ * @swagger
+ * path: /wallet/sendRawTransaction
+ * operations:
+ *   - httpMethod: POST
+ *     nickname: sendRawTransaction
+ *     summary: send the raw transaction from user's wallet
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - name: args
+ *         paramType: body 
+ *         dataType: accountDAO
+ *         description: account private key and password
+ *         required: true
+ */
 router.post('/sendRawTransaction', function(req, res){
     let pri = req.body.pri;
     let to = req.body.to;
@@ -229,6 +244,22 @@ router.post('/sendRawTransaction', function(req, res){
 	});
   });
 
+/**
+ * @swagger
+ * path: /wallet/sendTransaction
+ * operations:
+ *   - httpMethod: POST
+ *     nickname: sendTransaction
+ *     summary: send the transaction
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - name: args
+ *         paramType: body 
+ *         dataType: accountDAO
+ *         description: account private key and password
+ *         required: true
+ */
 router.post('/sendTransaction', function(req, res) {
     let from = req.body.from;
     let to = req.body.to;

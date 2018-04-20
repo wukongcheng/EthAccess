@@ -36,8 +36,7 @@ app.use(swagger.init(app, {
     swaggerURL: '/swagger',
     swaggerJSON: '/api-docs.json',
     swaggerUI: './public/swagger/',
-    //models: './routes/models.json', //if separate models from the source code,uncomment this line
-    apis: ['./routes/wallet.js']
+    apis: ['./routes/wallet.js','./routes/admin.js']
 }));
 
 app.use(rootPath + '/admin', admin);
