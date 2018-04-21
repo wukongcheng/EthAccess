@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var admin = require('./routes/admin');
 var wallet = require('./routes/wallet');
+var erc20 = require('./routes/erc20token');
 
 const swagger = require('swagger-express');
 const rootPath = require('config').app.rootPath;
@@ -41,6 +42,7 @@ app.use(swagger.init(app, {
 
 app.use(rootPath + '/admin', admin);
 app.use(rootPath + '/wallet', wallet);
+app.use(rootPath + '/erc20', erc20);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
