@@ -6,7 +6,7 @@
 var express = require('express');
 var router = express.Router();
 var logger = require('../lib/common/winstonlog.js');
-const walletapi = require('../lib/contract/erc20.js');
+const erc20 = require('../lib/contract/erc20.js');
 const wif = require('../lib/common/wif.js');
 const bip = require('../lib/common/bip.js');
 const VError = require('verror');
@@ -84,3 +84,5 @@ router.post('/transfer', function(req, res) {
             });
     });
   });
+
+module.exports = router;
