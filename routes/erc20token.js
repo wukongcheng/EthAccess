@@ -85,4 +85,46 @@ router.post('/transfer', function(req, res) {
     });
   });
 
+/**
+ * @swagger
+ * path: /erc20/rawTransfer
+ * operations:
+ *   - httpMethod: POST
+ *     nickname: send Raw Transaction
+ *     summary: send the transaction
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - name: args
+ *         paramType: body 
+ *         dataType: accountDAO
+ *         description: account private key and password
+ *         required: true
+ */
+router.post('/rawTransfer', function(req, res) {
+    let pri = req.body.pri;
+    let to = req.body.to;
+    let value = req.body.value;
+
+    return erc20.rawTransfer(pri, to, value).then((hash)=>{ 
+        logger.debug('erc20.rawTransfer: txhash = ' + hash);
+
+        res.json({
+            "result": "success",
+            "errorMsg": null,
+            "errorCode": null,
+            "content": hash
+        });
+    }).catch((error) => {
+        logger.debug('erc20.transfer: error = ' + error.message);
+
+        res.json({
+                "result": "failed",
+                "errorMsg": error.message,
+                "errorCode": null,
+                "content": null
+            });
+    });
+});
+
 module.exports = router;
