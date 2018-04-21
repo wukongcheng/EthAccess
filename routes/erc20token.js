@@ -32,12 +32,55 @@ const dao = require('../dao/accountDAO.js')
 router.get('/getBalance/:address', function(req, res){
     let address = req.params.address;
   
-    var balance = erc20.getBalance(address);
-    
-    res.json({
-        "result": "success",
-        "errorMsg": null,
-        "errorCode": null,
-        "content": balance
+    return erc20.getBalance(address).then((balance)=>{
+        res.json({
+              "result": "success",
+              "errorMsg": null,
+              "errorCode": null,
+              "content": balance
+          });
     });
 });
+
+/**
+ * @swagger
+ * path: /erc20/transfer
+ * operations:
+ *   - httpMethod: POST
+ *     nickname: sendTransaction
+ *     summary: send the transaction
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - name: args
+ *         paramType: body 
+ *         dataType: accountDAO
+ *         description: account private key and password
+ *         required: true
+ */
+router.post('/transfer', function(req, res) {
+    let from = req.body.from;
+    let to = req.body.to;
+    let value = req.body.value;
+    let pwd = req.body.pwd;
+
+    return erc20.transfer(from, to, value, pwd).then((hash)=>{ 
+        logger.debug('erc20.transfer: txhash = ' + hash);
+
+        res.json({
+            "result": "success",
+            "errorMsg": null,
+            "errorCode": null,
+            "content": hash
+        });
+    }).catch((error) => {
+        logger.debug('erc20.transfer: error = ' + error.message);
+
+        res.json({
+                "result": "failed",
+                "errorMsg": error.message,
+                "errorCode": null,
+                "content": null
+            });
+    });
+  });
