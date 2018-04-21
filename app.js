@@ -37,7 +37,7 @@ app.use(swagger.init(app, {
     swaggerURL: '/swagger',
     swaggerJSON: '/api-docs.json',
     swaggerUI: './public/swagger/',
-    apis: ['./routes/wallet.js','./routes/admin.js']
+    apis: ['./routes/wallet.js','./routes/erc20token.js','./routes/admin.js']
 }));
 
 app.use(rootPath + '/admin', admin);
